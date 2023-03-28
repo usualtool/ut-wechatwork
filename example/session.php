@@ -21,7 +21,7 @@ else:
             $config=Http::LoadConfig();
             $appid=$config["appid"];
             $appurl=$config["appurl"];
-            UTInc::GoUrl('https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri='.urlencode("https://xxx").'&response_type=code&scope=snsapi_base&state=usualtool#wechat_redirect','');
+            UTInc::GoUrl('https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={urlencode($appurl)}&response_type=code&scope=snsapi_base&state=usualtool#wechat_redirect','');
         else:
             UTInc::GoUrl('','本应用暂只支持在企业微信中使用');
         endif;
