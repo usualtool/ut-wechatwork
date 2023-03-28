@@ -1,4 +1,3 @@
-<?php
-require_once dirname(__FILE__).'/'.'autoload.php';
-use usualtool\WecahtWork\Work;
-$work=new Work();
+企业微信对接UTFrame开发接口
+注意：2.0及以下版本仅支持个人主体的开发者使用。
+演示文件包含：回调验证、指令验证、OAuth2.0登录。
