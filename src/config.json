@@ -2,5 +2,6 @@
     "appid":"",
     "secret":"",
     "token":"",
-    "aeskey":""
+    "aeskey":"",
+    "appurl":""
 }
