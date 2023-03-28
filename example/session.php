@@ -17,7 +17,7 @@ else:
         $_SESSION["work_openid"]=$openid;
     else:
         if(UTInc::IsApp()):
-            UTInc::GoUrl('https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww71f26f987661ab68&redirect_uri='.urlencode("https://erp.usualtool.com/?m=service").'&response_type=code&scope=snsapi_base&state=usualtool#wechat_redirect','');
+            UTInc::GoUrl('https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri='.urlencode("https://xxx").'&response_type=code&scope=snsapi_base&state=usualtool#wechat_redirect','');
         else:
             UTInc::GoUrl('','本应用暂只支持在企业微信中使用');
         endif;
