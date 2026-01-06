@@ -10,14 +10,14 @@ class AuthToken{
     }
     //获取TOKEN
     public function GetToken() {
-        $file = file_get_contents(APP_ROOT."/log/wechatwork.token.json");
+        $file = file_get_contents(UTF_ROOT."/log/wechatwork.token.json");
         $result = json_decode($file,true);
         if(time()>$result['expires']):
             $data = array();
             $data['suite_access_token'] = $this->GetNewToken();
             $data['expires']=time()+5400;
             $json=json_encode($data);
-            file_put_contents(APP_ROOT."/log/wechatwork.token.json",$json);
+            file_put_contents(UTF_ROOT."/log/wechatwork.token.json",$json);
             return $data['suite_access_token'];
         else:
             return $result['suite_access_token'];
@@ -25,7 +25,7 @@ class AuthToken{
     }
     //获取新的TOKEN
     public function GetNewToken(){
-        $ticket=file_get_contents(APP_ROOT."/log/wechatwork.ticket.log");
+        $ticket=file_get_contents(UTF_ROOT."/log/wechatwork.ticket.log");
         $url = "https://qyapi.weixin.qq.com/cgi-bin/service/get_suite_token";
         $json=json_encode(array(
             "suite_id"=>$this->appid,
@@ -48,8 +48,8 @@ class AuthToken{
         	"auth_code":"'.$code.'"
         }';
         $data =  Http::PostData($url,$json);
-        UTInc::MakeDir(APP_ROOT."/log/wechatwork/com/");
-        file_put_contents(APP_ROOT."/log/wechatwork/com/".$corpid.".json",json_encode($data));
+        UTInc::MakeDir(UTF_ROOT."/log/wechatwork/com/");
+        file_put_contents(UTF_ROOT."/log/wechatwork/com/".$corpid.".json",json_encode($data));
         return $data;
     }
     //据CODE令牌获取用户身份
@@ -62,8 +62,8 @@ class AuthToken{
             else:
                 $openid=$data["openid"];
             endif;
-            UTInc::MakeDir(APP_ROOT."/log/wechatwork/");
-            file_put_contents(APP_ROOT."/log/wechatwork/".$openid.".json",json_encode($data));
+            UTInc::MakeDir(UTF_ROOT."/log/wechatwork/");
+            file_put_contents(UTF_ROOT."/log/wechatwork/".$openid.".json",json_encode($data));
         endif;
         return $data;
     }
