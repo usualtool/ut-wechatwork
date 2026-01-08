@@ -1,5 +1,9 @@
 <?php
 namespace usualtool\WechatWork;
+use usualtool\WechatWork\Http;
+/*
+  *企业微信自建应用
+**/
 class Corp{
     private $apiurl;
     private $corpid;
@@ -32,7 +36,7 @@ class Corp{
         endif;
     }
     public function GetNewToken(){
-        $result=$this->GetData($this->apiurl."/gettoken?corpid={$this->corpid}&corpsecret={$this->secret}");
+        $result=Http::GetData($this->apiurl."/gettoken?corpid={$this->corpid}&corpsecret={$this->secret}");
         return $result['access_token'];
     }
     /*
@@ -43,7 +47,7 @@ class Corp{
     **/
     public function GetParter(){
         $json=json_encode(["limit"=>10000]);
-        $data=$this->PostData($this->apiurl."/user/list_id?access_token={$this->GetToken()}",$json);
+        $data=Http::PostData($this->apiurl."/user/list_id?access_token={$this->GetToken()}",$json);
         return $data;
     }
     /*
@@ -51,21 +55,21 @@ class Corp{
     **/
     public function ToParterId($telphone){
         $json=json_encode(["mobile"=>$telphone]);
-        $data=$this->PostData($this->apiurl."/user/getuserid?access_token={$this->GetToken()}",$json);
+        $data=Http::PostData($this->apiurl."/user/getuserid?access_token={$this->GetToken()}",$json);
         return $data;
     }
     /*
       *读取企业成员详情
     **/
     public function GetParterDetail($userid){
-        $data=$this->GetData($this->apiurl."/user/get?access_token={$this->GetToken()}&userid=".$userid);
+        $data=Http::GetData($this->apiurl."/user/get?access_token={$this->GetToken()}&userid=".$userid);
         return $data;
     }
     /*
       *删除成员
     **/
     public function DelParter($userid){
-        $data=$this->GetData($this->apiurl."/user/delete?access_token={$this->GetToken()}&userid=".$userid);
+        $data=Http::GetData($this->apiurl."/user/delete?access_token={$this->GetToken()}&userid=".$userid);
         return $data;
     }
     /*
@@ -75,36 +79,36 @@ class Corp{
       *获取具有客户联系功能的员工
     **/
     public function GetStaff($uid){
-        $data=$this->GetData($this->apiurl."/externalcontact/get_follow_user_list?access_token={$this->GetToken()}");
+        $data=Http::GetData($this->apiurl."/externalcontact/get_follow_user_list?access_token={$this->GetToken()}");
         return $data;
     }
     /*
       *获取员工名下客户
     **/
     public function GetCustomer($uid){
-        $data=$this->GetData($this->apiurl."/externalcontact/list?access_token={$this->GetToken()}&userid=".$uid);
+        $data=Http::GetData($this->apiurl."/externalcontact/list?access_token={$this->GetToken()}&userid=".$uid);
         return $data;
     }
     /*
       *获取客户详情
     **/
     public function GetCustomerDetail($userid){
-        $data=$this->GetData($this->apiurl."/externalcontact/get?access_token={$this->GetToken()}&external_userid=".$userid);
+        $data=Http::GetData($this->apiurl."/externalcontact/get?access_token={$this->GetToken()}&external_userid=".$userid);
         return $data;
     }
     /*
       *获取企业客户标签
     **/
     public function GetTag(){
-        $data=$this->GetData($this->apiurl."/externalcontact/get_corp_tag_list?access_token={$this->GetToken()}");
+        $data=Http::GetData($this->apiurl."/externalcontact/get_corp_tag_list?access_token={$this->GetToken()}");
         return $data;
     }
     /*
-      *获取客户群列表、详情
+      *获取客户群
     **/
     public function GetGroup(){
         $json=json_encode(["limit"=>500]);
-        $list=$this->PostData($this->apiurl."/externalcontact/groupchat/list?access_token={$this->GetToken()}",$json);
+        $list=Http::PostData($this->apiurl."/externalcontact/groupchat/list?access_token={$this->GetToken()}",$json);
         $group=$list["group_chat_list"];
         return $group;
     }
@@ -125,7 +129,7 @@ class Corp{
     public function GetGroupDetail($chat_id,$need_name=0){
         $data=json_encode(["chat_id"=>$chat_id,"need_name"=>$need_name]);
         $url=$this->apiurl."/externalcontact/groupchat/get?access_token=".$this->GetToken();
-        $result=$this->PostData($url,$data);
+        $result=Http::PostData($url,$data);
         return $result;
     }
     /*
@@ -144,7 +148,7 @@ class Corp{
             "chat_id_list"=>$groupid,
             "sender"=>$sender
         ];
-        if($msgtype="text"):
+        if($msgtype=="text"):
             $data["text"]=array(
                 "content"=>$attach
             );
@@ -155,8 +159,9 @@ class Corp{
             );
         endif;
         $json=json_encode($data);
+        echo$json;
         $url=$this->apiurl."/externalcontact/add_msg_template?access_token=".$this->GetToken();
-        $result=$this->PostData($url,$json);
+        $result=Http::PostData($url,$json);
         return $result;
     }
     /*
@@ -184,7 +189,7 @@ class Corp{
         endif;
         $json=json_encode($data);
         $url=$this->apiurl."/externalcontact/add_msg_template?access_token=".$this->GetToken();
-        $result=$this->PostData($url,$json);
+        $result=Http::PostData($url,$json);
         return $result;
     }
     /*
@@ -193,42 +198,16 @@ class Corp{
     public function StopSend($msgid){
         $data=json_encode(["msgid"=>$msgid]);
         $url=$this->apiurl."/externalcontact/cancel_groupmsg_send?access_token=".$this->GetToken();
-        $result=$this->PostData($url,$data);
+        $result=Http::PostData($url,$data);
         return $result;
     }
     /*
       *opengid转群id
     **/
-    public function ToGid($opengid){
+    public function ToGroupId($opengid){
         $data=json_encode(["opengid"=>$msgid]);
         $url=$this->apiurl."/externalcontact/opengid_to_chatid?access_token=".$this->GetToken();
-        $result=$this->PostData($url,$data);
+        $result=Http::PostData($url,$data);
         return $result;
-    }
-    /*
-      *GET/POST CURL
-    **/
-    public function GetData($url){
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        return json_decode($output,true);
-    }
-    public function PostData($url,$data=''){
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-        if(!empty($data)):
-            curl_setopt($ch, CURLOPT_POST, TRUE);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        endif;
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        return json_decode($output,true);
     }
 }
