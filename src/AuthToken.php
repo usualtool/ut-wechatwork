@@ -2,6 +2,9 @@
 namespace usualtool\WechatWork;
 use usualtool\WechatWork\Http;
 use library\UsualToolInc\UTInc;
+/*
+  *第三方应用
+**/
 class AuthToken{
     public function __construct(){
         $config=Http::LoadConfig();
