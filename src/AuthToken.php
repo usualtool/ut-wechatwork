@@ -8,6 +8,9 @@ use library\UsualToolInc\UTInc;
 class AuthToken{
     public function __construct(){
         $config=Http::LoadConfig();
+        if(!is_array($config)):
+            throw new \Exception("配置加载失败");
+        endif;
         $this->appid=$config["appid"];
         $this->secret=$config["secret"];
     }
