@@ -2,9 +2,11 @@
 namespace usualtool\WechatWork;
 class Http{
     public static function LoadConfig(){
-        $json=file_get_contents(dirname(__FILE__)."/config.json");
-        $data=json_decode($json,true);
-        return $data;
+        if(!file_exists('Config.php')){
+            throw new \Exception("未见第三方配置文件Config.php");
+        }
+        include 'Config.php';
+        return $config;
     }
     public static function GetData($url){
         $ch = curl_init();
