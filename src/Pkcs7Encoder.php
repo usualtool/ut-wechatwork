@@ -1,7 +1,5 @@
 <?php
 namespace usualtool\WechatWork;
-use usualtool\WechatWork\ErrorCode;
-
 /**
  * PKCS7Encoder class
  *
@@ -45,5 +43,6 @@ class Pkcs7Encoder{
         }
         return substr($text, 0, (strlen($text) - $pad));
     }
+
 
 }
