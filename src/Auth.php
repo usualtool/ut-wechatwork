@@ -5,7 +5,7 @@ use library\UsualToolInc\UTInc;
 /*
   *第三方应用
 **/
-class AuthToken{
+class Auth{
     public function __construct(){
         $config=Http::LoadConfig();
         if(!is_array($config)):
