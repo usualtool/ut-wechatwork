@@ -1,14 +1,14 @@
 <?php
-use library\UsualToolInc\UTInc;
-use usualtool\WechatWork\AuthToken;
+use usualtool\WechatWork\Auth;
 use usualtool\WechatWork\Http;
+use library\UsualToolInc\UTInc;
 if(isset($_SESSION['work_openid']) && !empty($_SESSION['work_openid'])):
     $openid=$_SESSION['work_openid'];
     $data=file_get_contents(UTF_ROOT."/log/wechatwork/".$openid.".json");
 else:
     $code=$_GET["code"];
     if(!empty($code)):
-        $work=new AuthToken();
+        $work=new Auth();
         $user=$work->GetUser($code);
         if(array_key_exists("open_userid",$user)):
             $openid=$user["open_userid"];
@@ -29,3 +29,4 @@ else:
         endif;
     endif;
 endif;
+
