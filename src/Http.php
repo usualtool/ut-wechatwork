@@ -5,7 +5,7 @@ class Http{
         if(!file_exists('Config.php')){
             throw new \Exception("未见第三方配置文件Config.php");
         }
-        $config=include __DIR__.'/config.php';
+        $config=include __DIR__.'/Config.php';
         return $config;
     }
     public static function GetData($url){
