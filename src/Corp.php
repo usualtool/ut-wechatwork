@@ -14,7 +14,7 @@ class Corp{
             $this->secret=$corpsecret;
             $this->apiurl="https://qyapi.weixin.qq.com/cgi-bin";
         else:
-            echo "企业ID与应用密钥不能为空";
+            throw new \Exception("企业ID与应用密钥不能为空");
         endif;
     }
     /*
@@ -211,3 +211,4 @@ class Corp{
         return $result;
     }
 }
+
