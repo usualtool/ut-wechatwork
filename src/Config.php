@@ -1,5 +1,5 @@
 <?php
-$config=[
+return [
     "appid"=>"",
     "secret"=>"",
     "token"=>"",
