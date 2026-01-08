@@ -8,9 +8,9 @@ use usualtool\WechatWork\ErrorCode;
 class WorkMsg{
 	public function __construct(){
         $config=Http::LoadConfig();
+		$this->appid = $config["appid"];
 		$this->token = $config["token"];
 		$this->aeskey = $config["aeskey"];
-		$this->appid = $config["appid"];
 	}
     //验证消息
 	public function Valid($signature, $timestamp, $nonce, $data){
@@ -103,4 +103,5 @@ class WorkMsg{
 		$msg = $result[1];
 		return ErrorCode::$OK;
 	}
+
 }
