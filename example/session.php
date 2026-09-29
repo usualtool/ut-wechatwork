@@ -1,7 +1,7 @@
 <?php
 use usualtool\WechatWork\Auth;
 use usualtool\WechatWork\Http;
-use library\UsualToolInc\UTInc;
+use usualtool\Lib\Inc;
 if(isset($_SESSION['work_openid']) && !empty($_SESSION['work_openid'])):
     $openid=$_SESSION['work_openid'];
     $data=file_get_contents(UTF_ROOT."/log/wechatwork/".$openid.".json");
@@ -19,13 +19,13 @@ else:
         endif;
         $_SESSION["work_openid"]=$openid;
     else:
-        if(UTInc::IsApp()):
+        if(Inc::IsApp()):
             $config=Http::LoadConfig();
             $appid=$config["appid"];
             $appurl=$config["appurl"];
-            UTInc::GoUrl('https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={urlencode($appurl)}&response_type=code&scope=snsapi_base&state=usualtool#wechat_redirect','');
+            Inc::GoUrl('https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={urlencode($appurl)}&response_type=code&scope=snsapi_base&state=usualtool#wechat_redirect');
         else:
-            UTInc::GoUrl('','本应用暂只支持在企业微信中使用');
+            Inc::GoUrl('','本应用暂只支持在企业微信中使用');
         endif;
     endif;
 endif;
