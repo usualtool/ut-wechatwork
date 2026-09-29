@@ -1,7 +1,7 @@
 <?php
 namespace usualtool\WechatWork;
 use usualtool\WechatWork\Http;
-use library\UsualToolInc\UTInc;
+use usualtool\Lib\Inc;
 /*
   *第三方应用
 **/
@@ -54,7 +54,7 @@ class Auth{
         	"auth_code":"'.$code.'"
         }';
         $data =  Http::PostData($url,$json);
-        UTInc::MakeDir(UTF_ROOT."/log/wechatwork/com/");
+        Inc::MakeDir(UTF_ROOT."/log/wechatwork/com/");
         file_put_contents(UTF_ROOT."/log/wechatwork/com/".$corpid.".json",json_encode($data));
         return $data;
     }
@@ -68,7 +68,7 @@ class Auth{
             else:
                 $openid=$data["openid"];
             endif;
-            UTInc::MakeDir(UTF_ROOT."/log/wechatwork/");
+            Inc::MakeDir(UTF_ROOT."/log/wechatwork/");
             file_put_contents(UTF_ROOT."/log/wechatwork/".$openid.".json",json_encode($data));
         endif;
         return $data;
